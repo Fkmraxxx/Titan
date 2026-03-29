@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fk Titan</title>
+  <link rel="stylesheet" href="assets/css/theme.css" />
+  <link rel="stylesheet" href="assets/css/calculator.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <section class="calculator" aria-label="Fk Titan">
+      <header class="calculator__brand">
+        <div>
+          <span class="brand-mark">Fk</span>
+          <span class="brand-name">Titan</span>
+        </div>
+        <div class="brand-sub">Prototype UI • Full Red Concept</div>
+      </header>
+
+      <section class="screen-shell">
+        <div class="screen-shell__glow"></div>
+
+        <div class="screen-topbar">
+          <div class="screen-led" id="screenLed"></div>
+          <div class="screen-meta">
+            <span id="metaMode">HOME</span>
+            <span id="metaStatus">READY</span>
+          </div>
+          <div class="screen-battery">
+            <span class="battery-label">BAT</span>
+            <span class="battery-bars"><i></i><i></i><i></i></span>
+          </div>
+        </div>
+
+        <div class="screen" id="screen"></div>
+
+        <div class="softkeys" id="softkeys"></div>
+      </section>
+
+      <section class="nav-zone">
+        <div class="dpad" aria-label="Navigation pad">
+          <button class="nav-btn nav-up" data-nav="up" aria-label="Haut">▲</button>
+          <button class="nav-btn nav-left" data-nav="left" aria-label="Gauche">◀</button>
+          <button class="nav-btn nav-center" data-action="ok" aria-label="OK">OK</button>
+          <button class="nav-btn nav-right" data-nav="right" aria-label="Droite">▶</button>
+          <button class="nav-btn nav-down" data-nav="down" aria-label="Bas">▼</button>
+        </div>
+
+        <div class="system-pills">
+          <button class="pill pill-home" data-action="home" aria-label="Accueil">⌂</button>
+          <button class="pill pill-power" data-action="power" aria-label="Alimentation">⏻</button>
+          <button class="pill pill-back" data-action="back" aria-label="Retour">↩</button>
+        </div>
+      </section>
+
+      <section class="keypad" id="keypad"></section>
+    </section>
+  </main>
+
+  <script type="module" src="assets/js/main.js"></script>
+</body>
+</html>
