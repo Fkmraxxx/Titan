@@ -1,11 +1,174 @@
 /**
  * Fk Titan — Calculator Engine
  * Handles expression evaluation with full scientific calculator support.
+ * Uses a safe recursive descent parser — no eval/Function constructor.
  */
 
 /**
+ * Tokenize a mathematical expression string into tokens.
+ */
+function tokenize(expr) {
+  const tokens = [];
+  let i = 0;
+  while (i < expr.length) {
+    const ch = expr[i];
+
+    // Skip whitespace
+    if (ch === " ") { i++; continue; }
+
+    // Numbers (including decimals)
+    if ((ch >= "0" && ch <= "9") || (ch === "." && i + 1 < expr.length && expr[i + 1] >= "0" && expr[i + 1] <= "9")) {
+      let num = "";
+      while (i < expr.length && ((expr[i] >= "0" && expr[i] <= "9") || expr[i] === ".")) {
+        num += expr[i++];
+      }
+      tokens.push({ type: "number", value: parseFloat(num) });
+      continue;
+    }
+
+    // Functions: sin, cos, tan, log, ln, sqrt
+    const funcs = ["sin", "cos", "tan", "log", "ln", "sqrt"];
+    let matched = false;
+    for (const fn of funcs) {
+      if (expr.substring(i, i + fn.length) === fn) {
+        tokens.push({ type: "func", value: fn });
+        i += fn.length;
+        matched = true;
+        break;
+      }
+    }
+    if (matched) continue;
+
+    // Operators and parens
+    if ("+-*/^%".includes(ch)) {
+      tokens.push({ type: "op", value: ch });
+      i++;
+      continue;
+    }
+    if (ch === "(") { tokens.push({ type: "lparen" }); i++; continue; }
+    if (ch === ")") { tokens.push({ type: "rparen" }); i++; continue; }
+
+    // Unknown character
+    throw new Error(`Caractère invalide: ${ch}`);
+  }
+  return tokens;
+}
+
+/**
+ * Recursive descent parser for safe math evaluation.
+ *
+ * Grammar:
+ *   expression = term (('+' | '-') term)*
+ *   term       = power (('*' | '/' | '%') power)*
+ *   power      = unary ('^' unary)*
+ *   unary      = ('-' unary) | postfix
+ *   postfix    = primary
+ *   primary    = number | func '(' expression ')' | '(' expression ')'
+ */
+function parse(tokens) {
+  let pos = 0;
+
+  function peek() { return tokens[pos] || null; }
+  function consume() { return tokens[pos++]; }
+
+  function expect(type) {
+    const t = consume();
+    if (!t || t.type !== type) throw new Error("Expression invalide");
+    return t;
+  }
+
+  function parseExpression() {
+    let left = parseTerm();
+    while (peek() && peek().type === "op" && (peek().value === "+" || peek().value === "-")) {
+      const op = consume().value;
+      const right = parseTerm();
+      left = op === "+" ? left + right : left - right;
+    }
+    return left;
+  }
+
+  function parseTerm() {
+    let left = parsePower();
+    while (peek() && peek().type === "op" && (peek().value === "*" || peek().value === "/" || peek().value === "%")) {
+      const op = consume().value;
+      const right = parsePower();
+      if (op === "*") left = left * right;
+      else if (op === "/") {
+        if (right === 0) throw new Error("Division par zéro");
+        left = left / right;
+      }
+      else left = left % right;
+    }
+    return left;
+  }
+
+  function parsePower() {
+    let base = parseUnary();
+    while (peek() && peek().type === "op" && peek().value === "^") {
+      consume();
+      const exp = parseUnary();
+      base = Math.pow(base, exp);
+    }
+    return base;
+  }
+
+  function parseUnary() {
+    if (peek() && peek().type === "op" && peek().value === "-") {
+      consume();
+      return -parseUnary();
+    }
+    return parsePrimary();
+  }
+
+  function parsePrimary() {
+    const t = peek();
+    if (!t) throw new Error("Expression incomplète");
+
+    // Number
+    if (t.type === "number") {
+      consume();
+      return t.value;
+    }
+
+    // Function call
+    if (t.type === "func") {
+      const fn = consume().value;
+      expect("lparen");
+      const arg = parseExpression();
+      expect("rparen");
+      switch (fn) {
+        case "sin": return Math.sin(arg);
+        case "cos": return Math.cos(arg);
+        case "tan": return Math.tan(arg);
+        case "ln": return Math.log(arg);
+        case "log": return Math.log10(arg);
+        case "sqrt": return Math.sqrt(arg);
+        default: throw new Error(`Fonction inconnue: ${fn}`);
+      }
+    }
+
+    // Parenthesized expression
+    if (t.type === "lparen") {
+      consume();
+      const val = parseExpression();
+      expect("rparen");
+      return val;
+    }
+
+    throw new Error("Expression invalide");
+  }
+
+  const result = parseExpression();
+  if (pos < tokens.length) {
+    throw new Error("Expression invalide");
+  }
+  return result;
+}
+
+/**
  * Safely evaluate a mathematical expression string.
- * Converts display symbols to JS-compatible math, then evaluates.
+ * Converts display symbols to parser-compatible form, then evaluates via
+ * recursive descent parser (no eval/Function).
  */
 export function evaluateExpression(expr, ans) {
   if (!expr || expr.trim() === "") return null;
@@ -15,7 +178,7 @@ export function evaluateExpression(expr, ans) {
   // Replace Ans with the last answer value
   processed = processed.replace(/Ans/g, `(${ans})`);
 
-  // Replace display symbols with JS operators
+  // Replace display symbols with standard operators
   processed = processed.replace(/×/g, "*");
   processed = processed.replace(/÷/g, "/");
   processed = processed.replace(/−/g, "-");
@@ -33,33 +196,25 @@ export function evaluateExpression(expr, ans) {
   // Handle x⁻¹ → ^(-1)
   processed = processed.replace(/⁻¹/g, "^(-1)");
 
-  // Handle scientific functions
-  processed = processed.replace(/sin\(/g, "Math.sin(");
-  processed = processed.replace(/cos\(/g, "Math.cos(");
-  processed = processed.replace(/tan\(/g, "Math.tan(");
-  processed = processed.replace(/ln\(/g, "Math.log(");
-  processed = processed.replace(/log\(/g, "Math.log10(");
-  processed = processed.replace(/√\(/g, "Math.sqrt(");
+  // Handle function calls without explicit parentheses
+  processed = processed.replace(/sin\b(?!\()/g, "sin(");
+  processed = processed.replace(/cos\b(?!\()/g, "cos(");
+  processed = processed.replace(/tan\b(?!\()/g, "tan(");
+  processed = processed.replace(/ln\b(?!\()/g, "ln(");
+  processed = processed.replace(/log\b(?!\()/g, "log(");
+  processed = processed.replace(/sqrt\b(?!\()/g, "sqrt(");
 
-  // Handle power operator: ^ → **
-  processed = processed.replace(/\^/g, "**");
-
-  // Implicit multiplication: 2( → 2*(, )(→)*(
+  // Implicit multiplication: 2( → 2*(, )( → )*(, )2 → )*2
   processed = processed.replace(/(\d)\(/g, "$1*(");
   processed = processed.replace(/\)\(/g, ")*(");
+  processed = processed.replace(/\)(\d)/g, ")*$1");
 
-  // Validate: only allow safe characters
-  if (/[^0-9+\-*/().eE,\s]/.test(processed.replace(/Math\.(sin|cos|tan|log|log10|sqrt|PI|pow|abs|ceil|floor|round|exp)/g, ""))) {
-    throw new Error("Expression invalide");
-  }
-
-  // Try to evaluate
-  // We use Function constructor with no access to global scope
-  const fn = new Function(`"use strict"; return (${processed});`);
-  const result = fn();
+  // Tokenize and parse safely
+  const tokens = tokenize(processed);
+  const result = parse(tokens);
 
   if (typeof result !== "number" || !isFinite(result)) {
-    if (result !== result) throw new Error("Résultat indéfini"); // NaN check
+    if (Number.isNaN(result)) throw new Error("Résultat indéfini");
     throw new Error("Résultat infini");
   }
 
@@ -74,9 +229,7 @@ export function formatResult(num) {
   if (Number.isInteger(num) && Math.abs(num) < 1e15) {
     return num.toString();
   }
-  // Use toPrecision for large/small numbers
   const str = num.toPrecision(12);
-  // Remove trailing zeros
   return parseFloat(str).toString();
 }
 

@@ -340,7 +340,7 @@
   padding: 6px 4px 5px;
   border-radius: var(--radius-sm);
   position: relative;
-  background: linear-gradient(180deg, #3a3a50, #2a2a3e);
+  background: linear-gradient(180deg, var(--body-4), var(--body-2));
   box-shadow: var(--shadow-button);
   color: var(--text);
   display: flex;
@@ -350,7 +350,7 @@
 }
 
 .key:hover {
-  background: linear-gradient(180deg, #444460, #333348);
+  background: linear-gradient(180deg, var(--body-4), var(--body-3));
   transform: translateY(-1px);
 }
 

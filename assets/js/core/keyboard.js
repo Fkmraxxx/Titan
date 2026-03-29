@@ -5,13 +5,6 @@ import { evaluateExpression, formatResult } from "../apps/calculator.js";
 const HOME_COLUMNS = 3;
 
 export function bindCalculatorControls(root, state, update) {
-  // Initialize calculator state
-  state.route = "calc";
-  state.calcHistory = [];
-  state.ans = 0;
-  state.shiftActive = false;
-  state.alphaActive = false;
-
   root.addEventListener("click", (event) => {
     const target = event.target.closest("button");
     if (!target) return;
@@ -57,9 +50,6 @@ export function bindCalculatorControls(root, state, update) {
       case "power":
         state.powerOn = !state.powerOn;
         state.message = state.powerOn ? "SYSTEM READY" : "POWER OFF";
-        if (state.powerOn && !state.calcHistory) {
-          state.calcHistory = [];
-        }
         break;
 
       case "home":
