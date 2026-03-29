@@ -227,7 +227,9 @@ function handleInput(state, value) {
 
   // Clear meta modes after input
   state.shiftActive = false;
-  state.alphaActive = false;
+  if (!state.alphaLock) {
+    state.alphaActive = false;
+  }
 }
 
 function handleFunction(state, funcName) {
@@ -235,10 +237,19 @@ function handleFunction(state, funcName) {
     state.route = "calc";
   }
 
-  state.buffer += `${funcName}(`;
+  // Special function names that need different insertion
+  const specialInserts = {
+    "10^x": "10^(",
+    "e^x": "e^(",
+  };
+
+  const insert = specialInserts[funcName] || `${funcName}(`;
+  state.buffer += insert;
   state.message = `${funcName.toUpperCase()}(`;
   state.shiftActive = false;
-  state.alphaActive = false;
+  if (!state.alphaLock) {
+    state.alphaActive = false;
+  }
 }
 
 function handleExecute(state) {
@@ -296,6 +307,14 @@ function handleSystem(state, value) {
     case "math":
       state.message = "MATH";
       break;
+    case "apps":
+      state.route = "home";
+      state.message = "MENU";
+      break;
+    case "quit":
+      state.route = "calc";
+      state.message = "QUIT";
+      break;
     default:
       state.message = `${String(value).toUpperCase()}`;
       break;
@@ -305,10 +324,17 @@ function handleSystem(state, value) {
 function handleMeta(state, value) {
   if (value === "2ND") {
     state.shiftActive = !state.shiftActive;
+    state.alphaActive = false;
     state.message = state.shiftActive ? "2ND ON" : "2ND OFF";
   } else if (value === "ALPHA") {
     state.alphaActive = !state.alphaActive;
+    state.shiftActive = false;
     state.message = state.alphaActive ? "ALPHA ON" : "ALPHA OFF";
+  } else if (value === "A-LOCK") {
+    state.alphaLock = !state.alphaLock;
+    state.alphaActive = state.alphaLock;
+    state.shiftActive = false;
+    state.message = state.alphaLock ? "A-LOCK ON" : "A-LOCK OFF";
   }
 }
 

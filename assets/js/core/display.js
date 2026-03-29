@@ -5,7 +5,11 @@ export function renderSoftkeys(container, keys) {
         `<button class="softkey" type="button"
           data-second="${key.second || ""}"
           data-alpha="${key.alpha || ""}"
-        >${key.main}</button>`
+        >
+          <span class="softkey__second">${key.second || ""}</span>
+          <span class="softkey__alpha">${key.alpha || ""}</span>
+          <span class="softkey__main">${key.main}</span>
+        </button>`
     )
     .join("");
 }
