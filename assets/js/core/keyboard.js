@@ -13,6 +13,20 @@ export function bindCalculatorControls(root, state, update) {
     const value = target.dataset.value;
     const appId = target.dataset.appId;
 
+    // Resolve effective action/value when 2ND or ALPHA is active
+    let effectiveAction = action;
+    let effectiveValue = value;
+
+    if (state.shiftActive && target.dataset.secondAction) {
+      effectiveAction = target.dataset.secondAction;
+      effectiveValue = target.dataset.secondValue;
+      state.shiftActive = false;
+    } else if (state.alphaActive && target.dataset.alphaAction) {
+      effectiveAction = target.dataset.alphaAction;
+      effectiveValue = target.dataset.alphaValue;
+      state.alphaActive = false;
+    }
+
     // App card click
     if (appId) {
       state.route = appId;
@@ -21,15 +35,15 @@ export function bindCalculatorControls(root, state, update) {
       return;
     }
 
-    switch (action) {
+    switch (effectiveAction) {
       case "input":
         if (!state.powerOn) return;
-        handleInput(state, value);
+        handleInput(state, effectiveValue);
         break;
 
       case "func":
         if (!state.powerOn) return;
-        handleFunction(state, value);
+        handleFunction(state, effectiveValue);
         break;
 
       case "execute":
@@ -38,13 +52,13 @@ export function bindCalculatorControls(root, state, update) {
         break;
 
       case "system":
-        if (!state.powerOn && value !== "power") return;
-        handleSystem(state, value);
+        if (!state.powerOn && effectiveValue !== "power") return;
+        handleSystem(state, effectiveValue);
         break;
 
       case "meta":
         if (!state.powerOn) return;
-        handleMeta(state, value);
+        handleMeta(state, effectiveValue);
         break;
 
       case "power":
@@ -80,8 +94,8 @@ export function bindCalculatorControls(root, state, update) {
 
       case "open":
         if (!state.powerOn) return;
-        state.route = value;
-        state.message = `APP: ${value.toUpperCase()}`;
+        state.route = effectiveValue;
+        state.message = `APP: ${effectiveValue.toUpperCase()}`;
         break;
 
       default:
@@ -213,7 +227,9 @@ function handleInput(state, value) {
 
   // Clear meta modes after input
   state.shiftActive = false;
-  state.alphaActive = false;
+  if (!state.alphaLock) {
+    state.alphaActive = false;
+  }
 }
 
 function handleFunction(state, funcName) {
@@ -221,10 +237,19 @@ function handleFunction(state, funcName) {
     state.route = "calc";
   }
 
-  state.buffer += `${funcName}(`;
+  // Special function names that need different insertion
+  const specialInserts = {
+    "10^x": "10^(",
+    "e^x": "e^(",
+  };
+
+  const insert = specialInserts[funcName] || `${funcName}(`;
+  state.buffer += insert;
   state.message = `${funcName.toUpperCase()}(`;
   state.shiftActive = false;
-  state.alphaActive = false;
+  if (!state.alphaLock) {
+    state.alphaActive = false;
+  }
 }
 
 function handleExecute(state) {
@@ -282,6 +307,14 @@ function handleSystem(state, value) {
     case "math":
       state.message = "MATH";
       break;
+    case "apps":
+      state.route = "home";
+      state.message = "MENU";
+      break;
+    case "quit":
+      state.route = "calc";
+      state.message = "QUIT";
+      break;
     default:
       state.message = `${String(value).toUpperCase()}`;
       break;
@@ -291,10 +324,17 @@ function handleSystem(state, value) {
 function handleMeta(state, value) {
   if (value === "2ND") {
     state.shiftActive = !state.shiftActive;
+    state.alphaActive = false;
     state.message = state.shiftActive ? "2ND ON" : "2ND OFF";
   } else if (value === "ALPHA") {
     state.alphaActive = !state.alphaActive;
+    state.shiftActive = false;
     state.message = state.alphaActive ? "ALPHA ON" : "ALPHA OFF";
+  } else if (value === "A-LOCK") {
+    state.alphaLock = !state.alphaLock;
+    state.alphaActive = state.alphaLock;
+    state.shiftActive = false;
+    state.message = state.alphaLock ? "A-LOCK ON" : "A-LOCK OFF";
   }
 }
 

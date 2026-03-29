@@ -26,8 +26,8 @@ function tokenize(expr) {
       continue;
     }
 
-    // Functions: sin, cos, tan, log, ln, sqrt
-    const funcs = ["sin", "cos", "tan", "log", "ln", "sqrt"];
+    // Functions: asin, acos, atan, sin, cos, tan, log, ln, sqrt, inv
+    const funcs = ["asin", "acos", "atan", "sin", "cos", "tan", "log", "ln", "sqrt", "inv"];
     let matched = false;
     for (const fn of funcs) {
       if (expr.substring(i, i + fn.length) === fn) {
@@ -140,9 +140,13 @@ function parse(tokens) {
         case "sin": return Math.sin(arg);
         case "cos": return Math.cos(arg);
         case "tan": return Math.tan(arg);
+        case "asin": return Math.asin(arg);
+        case "acos": return Math.acos(arg);
+        case "atan": return Math.atan(arg);
         case "ln": return Math.log(arg);
         case "log": return Math.log10(arg);
         case "sqrt": return Math.sqrt(arg);
+        case "inv": return 1 / arg;
         default: throw new Error(`Fonction inconnue: ${fn}`);
       }
     }
@@ -197,12 +201,19 @@ export function evaluateExpression(expr, ans) {
   processed = processed.replace(/⁻¹/g, "^(-1)");
 
   // Handle function calls without explicit parentheses
+  processed = processed.replace(/asin\b(?!\()/g, "asin(");
+  processed = processed.replace(/acos\b(?!\()/g, "acos(");
+  processed = processed.replace(/atan\b(?!\()/g, "atan(");
   processed = processed.replace(/sin\b(?!\()/g, "sin(");
   processed = processed.replace(/cos\b(?!\()/g, "cos(");
   processed = processed.replace(/tan\b(?!\()/g, "tan(");
   processed = processed.replace(/ln\b(?!\()/g, "ln(");
   processed = processed.replace(/log\b(?!\()/g, "log(");
   processed = processed.replace(/sqrt\b(?!\()/g, "sqrt(");
+  processed = processed.replace(/inv\b(?!\()/g, "inv(");
+
+  // Handle e as Euler's number (when not followed by ^)
+  processed = processed.replace(/\be\b(?!\^)/g, `(${Math.E})`);
 
   // Implicit multiplication: 2( → 2*(, )( → )*(, )2 → )*2
   processed = processed.replace(/(\d)\(/g, "$1*(");

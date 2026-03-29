@@ -12,7 +12,8 @@ const state = {
   calcHistory: [],
   ans: 0,
   shiftActive: false,
-  alphaActive: false
+  alphaActive: false,
+  alphaLock: false
 };
 
 const refs = {
@@ -34,6 +35,47 @@ function update() {
     state.message,
     state.powerOn
   );
+
+  // Update softkey labels based on 2ND/ALPHA state
+  updateSoftkeyLabels(refs.softkeys, state);
+  updateKeypadIndicators(refs.keypad, state);
+}
+
+function updateSoftkeyLabels(softkeyContainer, state) {
+  const softkeys = softkeyContainer.querySelectorAll(".softkey");
+  softkeys.forEach((sk) => {
+    const mainSpan = sk.querySelector(".softkey__main");
+    const secondSpan = sk.querySelector(".softkey__second");
+    const alphaSpan = sk.querySelector(".softkey__alpha");
+    if (!mainSpan) return;
+
+    if (state.shiftActive && secondSpan) {
+      mainSpan.style.display = "none";
+      secondSpan.style.display = "block";
+      secondSpan.style.position = "static";
+      secondSpan.style.transform = "none";
+      if (alphaSpan) alphaSpan.style.display = "none";
+    } else if (state.alphaActive && alphaSpan) {
+      mainSpan.style.display = "none";
+      if (secondSpan) secondSpan.style.display = "none";
+      alphaSpan.style.display = "block";
+      alphaSpan.style.position = "static";
+      alphaSpan.style.transform = "none";
+    } else {
+      mainSpan.style.display = "";
+      if (secondSpan) { secondSpan.style.display = "none"; }
+      if (alphaSpan) { alphaSpan.style.display = "none"; }
+    }
+  });
+}
+
+function updateKeypadIndicators(keypadContainer, state) {
+  keypadContainer.querySelectorAll(".key__second").forEach((el) => {
+    el.classList.toggle("glow", state.shiftActive);
+  });
+  keypadContainer.querySelectorAll(".key__alpha").forEach((el) => {
+    el.classList.toggle("glow", state.alphaActive);
+  });
 }
 
 renderSoftkeys(refs.softkeys, SOFT_KEYS);

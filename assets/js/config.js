@@ -1,4 +1,10 @@
-export const SOFT_KEYS = ["Y=", "Window", "Zoom", "Trace", "Graph"];
+export const SOFT_KEYS = [
+  { main: "y=", second: "stat plot", alpha: "f1" },
+  { main: "window", second: "tblset", alpha: "f2" },
+  { main: "zoom", second: "format", alpha: "f3" },
+  { main: "trace", second: "calc", alpha: "f4" },
+  { main: "graph", second: "table", alpha: "f5" }
+];
 
 export const APPS = [
   { id: "calculation", label: "Calculation", icon: "∑" },
@@ -22,59 +28,69 @@ export const APPS = [
 ];
 
 export const KEY_ROWS = [
+  // Row 1 – system modifiers (6 keys)
   [
     { main: "2nd", type: "accent", action: "meta", value: "2ND", size: "small" },
-    { main: "alpha", sub: "A-LOCK", type: "accent", action: "meta", value: "ALPHA", size: "small" },
-    { main: "x,t,θ,n", type: "dark", action: "input", value: "x", size: "small" },
-    { main: "stat", sub: "list", type: "dark", action: "system", value: "stat", size: "small" },
-    { main: "math", sub: "test", type: "dark", action: "system", value: "math", size: "small" },
-    { main: "apps", sub: "menu", type: "dark", action: "home", value: "home", size: "small" }
+    { main: "mode", second: "quit", type: "dark", action: "system", value: "mode", secondAction: "system", secondValue: "quit", size: "small" },
+    { main: "del", second: "ins", type: "dark", action: "system", value: "del", secondAction: "system", secondValue: "ins", size: "small" },
+    { main: "alpha", second: "A-lock", type: "accent", action: "meta", value: "ALPHA", secondAction: "meta", secondValue: "A-LOCK", size: "small" },
+    { main: "x,t,θ,n", second: "link", type: "dark", action: "input", value: "x", secondAction: "system", secondValue: "link", size: "small" },
+    { main: "stat", second: "list", type: "dark", action: "system", value: "stat", secondAction: "system", secondValue: "list", size: "small" }
   ],
+  // Row 2 – menu keys (5 keys)
   [
-    { main: "x⁻¹", sub: "MATRIX", action: "input", value: "⁻¹", size: "small" },
-    { main: "sin", sub: "sin⁻¹", action: "func", value: "sin", size: "small" },
-    { main: "cos", sub: "cos⁻¹", action: "func", value: "cos", size: "small" },
-    { main: "tan", sub: "tan⁻¹", action: "func", value: "tan", size: "small" },
-    { main: "^", sub: "π", action: "input", value: "^" },
-    { main: "x²", sub: "√", action: "input", value: "²", size: "small" }
+    { main: "math", second: "test", alpha: "A", type: "dark", action: "system", value: "math", secondAction: "system", secondValue: "test", alphaAction: "input", alphaValue: "A", size: "small" },
+    { main: "apps", second: "angle", alpha: "B", type: "dark", action: "system", value: "apps", secondAction: "system", secondValue: "angle", alphaAction: "input", alphaValue: "B", size: "small" },
+    { main: "prgm", second: "draw", alpha: "C", type: "dark", action: "system", value: "prgm", secondAction: "system", secondValue: "draw", alphaAction: "input", alphaValue: "C", size: "small" },
+    { main: "vars", second: "distr", type: "dark", action: "system", value: "vars", secondAction: "system", secondValue: "distr", size: "small" }, // no alpha on TI-84
+    { main: "clear", type: "dark", action: "system", value: "clear", size: "small" }
   ],
+  // Row 3 – trig / calc (6 keys)
   [
-    { main: "log", sub: "10ˣ", action: "func", value: "log", size: "small" },
-    { main: "ln", sub: "eˣ", action: "func", value: "ln", size: "small" },
-    { main: "sto→", sub: "RCL", type: "dark", action: "system", value: "sto", size: "small" },
-    { main: "(", action: "input", value: "(" },
-    { main: ")", action: "input", value: ")" },
-    { main: "÷", type: "orange", action: "input", value: "÷" }
+    { main: "x⁻¹", second: "matrix", alpha: "D", action: "func", value: "inv", secondAction: "system", secondValue: "matrix", alphaAction: "input", alphaValue: "D", size: "small" },
+    { main: "sin", second: "sin⁻¹", alpha: "E", action: "func", value: "sin", secondAction: "func", secondValue: "asin", alphaAction: "input", alphaValue: "E", size: "small" },
+    { main: "cos", second: "cos⁻¹", alpha: "F", action: "func", value: "cos", secondAction: "func", secondValue: "acos", alphaAction: "input", alphaValue: "F", size: "small" },
+    { main: "tan", second: "tan⁻¹", alpha: "G", action: "func", value: "tan", secondAction: "func", secondValue: "atan", alphaAction: "input", alphaValue: "G", size: "small" },
+    { main: "^", second: "π", alpha: "H", action: "input", value: "^", secondAction: "input", secondValue: "π", alphaAction: "input", alphaValue: "H" },
+    { main: "x²", second: "√", alpha: "I", action: "input", value: "²", secondAction: "func", secondValue: "sqrt", alphaAction: "input", alphaValue: "I", size: "small" }
   ],
+  // Row 4 – punctuation / division (4 keys)
   [
-    { main: "MODE", sub: "QUIT", type: "dark", action: "system", value: "mode", size: "small" },
-    { main: "DEL", sub: "INS", type: "dark", action: "system", value: "del", size: "small" },
-    { main: ",", sub: "EE", type: "dark", action: "input", value: ",", size: "small" },
-    { main: "7", type: "light", action: "input", value: "7" },
-    { main: "8", type: "light", action: "input", value: "8" },
-    { main: "9", type: "light", action: "input", value: "9" }
+    { main: ",", second: "EE", alpha: "J", type: "dark", action: "input", value: ",", secondAction: "input", secondValue: "EE", alphaAction: "input", alphaValue: "J", size: "small" },
+    { main: "(", second: "{", alpha: "K", action: "input", value: "(", secondAction: "input", secondValue: "{", alphaAction: "input", alphaValue: "K" },
+    { main: ")", second: "}", alpha: "L", action: "input", value: ")", secondAction: "input", secondValue: "}", alphaAction: "input", alphaValue: "L" },
+    { main: "÷", second: "e", alpha: "M", type: "orange", action: "input", value: "÷", secondAction: "input", secondValue: "e", alphaAction: "input", alphaValue: "M" }
   ],
+  // Row 5 – log / 7-8-9 / × (5 keys)
   [
-    { main: "×", type: "orange", action: "input", value: "×" },
-    { main: "CLEAR", type: "dark", action: "system", value: "clear", size: "small" },
-    { main: "%", action: "input", value: "%", size: "small" },
-    { main: "4", type: "light", action: "input", value: "4" },
-    { main: "5", type: "light", action: "input", value: "5" },
-    { main: "6", type: "light", action: "input", value: "6" }
+    { main: "log", second: "10^x", alpha: "N", action: "func", value: "log", secondAction: "func", secondValue: "10^x", alphaAction: "input", alphaValue: "N", size: "small" },
+    { main: "7", second: "u", alpha: "O", type: "light", action: "input", value: "7", secondAction: "input", secondValue: "u", alphaAction: "input", alphaValue: "O" },
+    { main: "8", second: "v", alpha: "P", type: "light", action: "input", value: "8", secondAction: "input", secondValue: "v", alphaAction: "input", alphaValue: "P" },
+    { main: "9", second: "w", alpha: "Q", type: "light", action: "input", value: "9", secondAction: "input", secondValue: "w", alphaAction: "input", alphaValue: "Q" },
+    { main: "×", second: "[", alpha: "R", type: "orange", action: "input", value: "×", secondAction: "input", secondValue: "[", alphaAction: "input", alphaValue: "R" }
   ],
+  // Row 6 – ln / 4-5-6 / − (5 keys)
   [
-    { main: "−", type: "orange", action: "input", value: "−" },
-    { main: "Ans", type: "dark", action: "input", value: "Ans", size: "small" },
-    { main: "π", action: "input", value: "π", size: "small" },
-    { main: "1", type: "light", action: "input", value: "1" },
-    { main: "2", type: "light", action: "input", value: "2" },
-    { main: "3", type: "light", action: "input", value: "3" }
+    { main: "ln", second: "e^x", alpha: "S", action: "func", value: "ln", secondAction: "func", secondValue: "e^x", alphaAction: "input", alphaValue: "S", size: "small" },
+    { main: "4", second: "L4", alpha: "T", type: "light", action: "input", value: "4", secondAction: "input", secondValue: "L4", alphaAction: "input", alphaValue: "T" },
+    { main: "5", second: "L5", alpha: "U", type: "light", action: "input", value: "5", secondAction: "input", secondValue: "L5", alphaAction: "input", alphaValue: "U" },
+    { main: "6", second: "L6", alpha: "V", type: "light", action: "input", value: "6", secondAction: "input", secondValue: "L6", alphaAction: "input", alphaValue: "V" },
+    { main: "−", second: "]", alpha: "W", type: "orange", action: "input", value: "−", secondAction: "input", secondValue: "]", alphaAction: "input", alphaValue: "W" }
   ],
+  // Row 7 – sto / 1-2-3 / + (5 keys)
   [
-    { main: "+", type: "orange", action: "input", value: "+" },
-    { main: "(−)", type: "dark", action: "input", value: "(−)", size: "small" },
-    { main: ".", action: "input", value: ".", size: "small" },
-    { main: "0", type: "light", action: "input", value: "0", width: "wide" },
-    { main: "ENTER", type: "accent", action: "execute", value: "ENTER", size: "small" }
+    { main: "sto→", second: "rcl", alpha: "X", type: "dark", action: "system", value: "sto", secondAction: "system", secondValue: "rcl", alphaAction: "input", alphaValue: "X", size: "small" },
+    { main: "1", second: "L1", alpha: "Y", type: "light", action: "input", value: "1", secondAction: "input", secondValue: "L1", alphaAction: "input", alphaValue: "Y" },
+    { main: "2", second: "L2", alpha: "Z", type: "light", action: "input", value: "2", secondAction: "input", secondValue: "L2", alphaAction: "input", alphaValue: "Z" },
+    { main: "3", second: "L3", alpha: "θ", type: "light", action: "input", value: "3", secondAction: "input", secondValue: "L3", alphaAction: "input", alphaValue: "θ" },
+    { main: "+", second: "mem", alpha: "\"", type: "orange", action: "input", value: "+", secondAction: "system", secondValue: "mem", alphaAction: "input", alphaValue: "\"" }
+  ],
+  // Row 8 – on / 0 / . / neg / enter (5 keys)
+  [
+    { main: "on", second: "off", type: "dark", action: "power", value: "on", secondAction: "power", secondValue: "off", size: "small" },
+    { main: "0", second: "catalog", alpha: "_", type: "light", action: "input", value: "0", secondAction: "system", secondValue: "catalog", alphaAction: "input", alphaValue: "_", width: "wide" },
+    { main: ".", second: "i", alpha: ":", action: "input", value: ".", secondAction: "input", secondValue: "i", alphaAction: "input", alphaValue: ":" },
+    { main: "(−)", second: "ans", alpha: "?", type: "dark", action: "input", value: "(−)", secondAction: "input", secondValue: "Ans", alphaAction: "input", alphaValue: "?", size: "small" },
+    { main: "enter", second: "entry", alpha: "solve", type: "accent", action: "execute", value: "ENTER", secondAction: "system", secondValue: "entry", alphaAction: "system", alphaValue: "solve", size: "small" }
   ]
 ];
