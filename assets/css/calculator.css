@@ -393,22 +393,31 @@
   filter: brightness(1.1);
 }
 
-.key__sub {
+.key__second {
   display: block;
   min-height: 12px;
   font-size: 0.58rem;
   line-height: 1;
   letter-spacing: 0.04em;
-  color: var(--text-dim);
+  color: var(--accent);
   font-weight: 500;
 }
 
-.key.key-accent .key__sub,
-.key.key-orange .key__sub {
+.key__alpha {
+  display: block;
+  font-size: 0.5rem;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  color: #4caf50;
+  font-weight: 500;
+}
+
+.key.key-accent .key__second,
+.key.key-orange .key__second {
   color: rgba(255,255,255,0.7);
 }
 
-.key.key-light .key__sub {
+.key.key-light .key__second {
   color: var(--accent);
 }
 

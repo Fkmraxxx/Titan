@@ -13,6 +13,20 @@ export function bindCalculatorControls(root, state, update) {
     const value = target.dataset.value;
     const appId = target.dataset.appId;
 
+    // Resolve effective action/value when 2ND or ALPHA is active
+    let effectiveAction = action;
+    let effectiveValue = value;
+
+    if (state.shiftActive && target.dataset.secondAction) {
+      effectiveAction = target.dataset.secondAction;
+      effectiveValue = target.dataset.secondValue;
+      state.shiftActive = false;
+    } else if (state.alphaActive && target.dataset.alphaAction) {
+      effectiveAction = target.dataset.alphaAction;
+      effectiveValue = target.dataset.alphaValue;
+      state.alphaActive = false;
+    }
+
     // App card click
     if (appId) {
       state.route = appId;
@@ -21,15 +35,15 @@ export function bindCalculatorControls(root, state, update) {
       return;
     }
 
-    switch (action) {
+    switch (effectiveAction) {
       case "input":
         if (!state.powerOn) return;
-        handleInput(state, value);
+        handleInput(state, effectiveValue);
         break;
 
       case "func":
         if (!state.powerOn) return;
-        handleFunction(state, value);
+        handleFunction(state, effectiveValue);
         break;
 
       case "execute":
@@ -38,13 +52,13 @@ export function bindCalculatorControls(root, state, update) {
         break;
 
       case "system":
-        if (!state.powerOn && value !== "power") return;
-        handleSystem(state, value);
+        if (!state.powerOn && effectiveValue !== "power") return;
+        handleSystem(state, effectiveValue);
         break;
 
       case "meta":
         if (!state.powerOn) return;
-        handleMeta(state, value);
+        handleMeta(state, effectiveValue);
         break;
 
       case "power":
@@ -80,8 +94,8 @@ export function bindCalculatorControls(root, state, update) {
 
       case "open":
         if (!state.powerOn) return;
-        state.route = value;
-        state.message = `APP: ${value.toUpperCase()}`;
+        state.route = effectiveValue;
+        state.message = `APP: ${effectiveValue.toUpperCase()}`;
         break;
 
       default:

@@ -1,6 +1,12 @@
 export function renderSoftkeys(container, keys) {
   container.innerHTML = keys
-    .map((label) => `<button class="softkey" type="button">${label}</button>`)
+    .map(
+      (key) =>
+        `<button class="softkey" type="button"
+          data-second="${key.second || ""}"
+          data-alpha="${key.alpha || ""}"
+        >${key.main}</button>`
+    )
     .join("");
 }
 
@@ -23,9 +29,14 @@ export function renderKeypad(container, rows) {
                   class="${classes.join(" ")}"
                   data-action="${key.action}"
                   data-value="${key.value || ""}"
+                  data-second-action="${key.secondAction || ""}"
+                  data-second-value="${key.secondValue || ""}"
+                  data-alpha-action="${key.alphaAction || ""}"
+                  data-alpha-value="${key.alphaValue || ""}"
                   type="button"
                 >
-                  <span class="key__sub">${key.sub || "&nbsp;"}</span>
+                  <span class="key__second">${key.second || "&nbsp;"}</span>
+                  <span class="key__alpha">${key.alpha || ""}</span>
                   <span class="key__main">${key.main}</span>
                 </button>
               `;
