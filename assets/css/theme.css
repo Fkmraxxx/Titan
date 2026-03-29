@@ -1,0 +1,57 @@
+:root {
+  --bg-1: #190108;
+  --bg-2: #30040f;
+  --body-red-1: #5f071d;
+  --body-red-2: #860d29;
+  --body-red-3: #b31236;
+  --body-red-4: #df3158;
+  --body-red-5: #ff6a8a;
+  --panel-dark: #13080c;
+  --panel-dark-2: #231116;
+  --screen-1: #120207;
+  --screen-2: #280812;
+  --screen-3: #3d1020;
+  --line: rgba(255, 255, 255, 0.11);
+  --line-strong: rgba(255, 255, 255, 0.22);
+  --text: #fff4f6;
+  --text-soft: #f2d3d9;
+  --text-dim: #c98f99;
+  --key-light: #fff4f6;
+  --key-light-2: #ecd8de;
+  --key-dark: #261419;
+  --key-dark-2: #140b0f;
+  --key-accent: #c41139;
+  --key-accent-2: #ea305a;
+  --key-success: #ff7a9a;
+  --shadow-1: 0 28px 60px rgba(0, 0, 0, 0.42);
+  --shadow-2: inset 0 1px 0 rgba(255,255,255,0.15), inset 0 -8px 16px rgba(0,0,0,0.24);
+  --shadow-button: 0 8px 16px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255,255,255,0.72);
+  --radius-xl: 34px;
+  --radius-lg: 26px;
+  --radius-md: 18px;
+  --radius-sm: 14px;
+  --font-main: "Segoe UI", Inter, Arial, sans-serif;
+  --font-mono: "Consolas", "Cascadia Code", monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-main);
+  background:
+    radial-gradient(circle at top, rgba(255, 106, 138, 0.18), transparent 30%),
+    linear-gradient(180deg, var(--bg-2), var(--bg-1));
+  color: var(--text);
+}
+
+button {
+  font: inherit;
+}
