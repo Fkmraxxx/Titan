@@ -108,3 +108,6 @@ export function render(screenEl, _state) {
     render(screenEl, _state);
   });
 }
+
+// Exports pour les tests unitaires
+export { parseData, computeStats };

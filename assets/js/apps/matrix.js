@@ -173,3 +173,6 @@ export function render(screenEl, _state) {
     render(screenEl, _state);
   });
 }
+
+// Exports pour les tests unitaires
+export { det2, det3, inv2, inv3, addMat, mulMat, toNum };

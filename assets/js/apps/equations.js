@@ -123,3 +123,23 @@ export function render(screenEl, _state) {
     render(screenEl, _state);
   });
 }
+
+// Exports pour les tests unitaires
+export function solveLinear(A, B) {
+  if (isNaN(A) || isNaN(B)) return { error: 'Coefficients invalides' };
+  if (A === 0) return { error: B === 0 ? 'Infinité de solutions' : 'Aucune solution' };
+  return { x: -B / A };
+}
+
+export function solveQuadratic(A, B, C) {
+  if (isNaN(A) || isNaN(B) || isNaN(C)) return { error: 'Coefficients invalides' };
+  if (A === 0) return { error: 'a ≠ 0 requis pour quadratique' };
+  const disc = B * B - 4 * A * C;
+  if (disc > 0) {
+    return { type: 'real', disc, x1: (-B + Math.sqrt(disc)) / (2 * A), x2: (-B - Math.sqrt(disc)) / (2 * A) };
+  } else if (disc === 0) {
+    return { type: 'double', disc, x1: -B / (2 * A) };
+  } else {
+    return { type: 'complex', disc, re: -B / (2 * A), im: Math.sqrt(-disc) / (2 * A) };
+  }
+}

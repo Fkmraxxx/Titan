@@ -1,0 +1,32 @@
+{
+  "name": "fk-titan",
+  "version": "1.0.0",
+  "description": "Scientific graphing calculator web app (TI/NumWorks style) in pure HTML/CSS/JavaScript ES Modules",
+  "type": "module",
+  "scripts": {
+    "start": "npx serve . --listen 3000",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "npx eslint 'assets/js/**/*.js' --ext .js"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^1.6.0",
+    "jsdom": "^29.0.1",
+    "vitest": "^1.6.0"
+  },
+  "keywords": [
+    "calculator",
+    "scientific",
+    "graphing",
+    "ti",
+    "numworks",
+    "es-modules"
+  ],
+  "author": "Fkmraxxx",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Fkmraxxx/Titan.git"
+  }
+}
