@@ -55,14 +55,14 @@ export function render(screenEl, _state) {
           <span style="color:#888">S<sub>n</sub></span>
           <span style="color:#a0ff9f;font-weight:bold">${fmt(results.sn)}</span>
         </div>
-        <div style="font-size:10px;color:#666;word-break:break-all">${termsStr}${results.terms.length < parseInt(n) ? '' : '...'}</div>
+        <div style="font-size:10px;color:#666;word-break:break-all">${termsStr}${results.terms.length < parseInt(n) ? '...' : ''}</div>
       </div>`;
   }
 
   screenEl.innerHTML = `
     <div style="font-family:monospace;padding:12px;color:#e0e0e0;height:100%;box-sizing:border-box;overflow:auto;background:#1a1a2e">
       <div style="font-size:14px;color:#a0c4ff;font-weight:bold;margin-bottom:10px;border-bottom:1px solid #333;padding-bottom:6px">
-        n Suites
+        n Suites numériques
       </div>
 
       <div style="margin-bottom:8px">

@@ -148,12 +148,10 @@ export function render(screenEl, _state) {
     funcStr = screenEl.querySelector('#g-func').value;
     xMin = screenEl.querySelector('#g-xmin').value;
     xMax = screenEl.querySelector('#g-xmax').value;
-    // Re-tracer sans re-rendre tout le DOM
-    plotGraph(canvas);
-    const errEl = screenEl.querySelector('#g-error');
-    if (errEl) errEl.textContent = errorMsg ? '⚠ ' + errorMsg : '';
-    if (errorMsg) {
-      render(screenEl, _state);
-    }
+    // Re-rend complètement pour afficher/masquer les erreurs
+    render(screenEl, _state);
+    // Tracé après le re-rendu
+    const newCanvas = screenEl.querySelector('#g-canvas');
+    if (newCanvas) plotGraph(newCanvas);
   });
 }
