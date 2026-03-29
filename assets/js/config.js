@@ -42,7 +42,7 @@ export const KEY_ROWS = [
     { main: "math", second: "test", alpha: "A", type: "dark", action: "system", value: "math", secondAction: "system", secondValue: "test", alphaAction: "input", alphaValue: "A", size: "small" },
     { main: "apps", second: "angle", alpha: "B", type: "dark", action: "system", value: "apps", secondAction: "system", secondValue: "angle", alphaAction: "input", alphaValue: "B", size: "small" },
     { main: "prgm", second: "draw", alpha: "C", type: "dark", action: "system", value: "prgm", secondAction: "system", secondValue: "draw", alphaAction: "input", alphaValue: "C", size: "small" },
-    { main: "vars", second: "distr", type: "dark", action: "system", value: "vars", secondAction: "system", secondValue: "distr", size: "small" },
+    { main: "vars", second: "distr", type: "dark", action: "system", value: "vars", secondAction: "system", secondValue: "distr", size: "small" }, // no alpha on TI-84
     { main: "clear", type: "dark", action: "system", value: "clear", size: "small" }
   ],
   // Row 3 – trig / calc (6 keys)
