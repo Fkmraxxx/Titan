@@ -1,12 +1,13 @@
 import { APPS } from "../config.js";
 import { renderHome } from "../apps/home.js";
 import { renderPlaceholder } from "../apps/placeholder.js";
+import { renderCalcScreen } from "../apps/calculator.js";
 
 export function renderScreen(screenEl, state) {
   if (!state.powerOn) {
     screenEl.innerHTML = `
       <div class="off-screen">
-        <div class="off-screen__text">Fk Titan standby</div>
+        <div class="off-screen__text">Fk Titan — standby</div>
       </div>
     `;
     return;
@@ -17,12 +18,18 @@ export function renderScreen(screenEl, state) {
     return;
   }
 
+  if (state.route === "calc") {
+    screenEl.innerHTML = renderCalcScreen(state);
+    return;
+  }
+
   const app = APPS.find((item) => item.id === state.route) || APPS[0];
-  screenEl.innerHTML = renderPlaceholder(app, state.buffer);
+  screenEl.innerHTML = renderPlaceholder(app);
 }
 
 export function getRouteLabel(route) {
   if (route === "home") return "HOME";
+  if (route === "calc") return "CALC";
   const app = APPS.find((item) => item.id === route);
   return app ? app.label.toUpperCase() : "APP";
 }

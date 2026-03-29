@@ -4,9 +4,9 @@ export function renderHome(apps, selectedIndex) {
       <div class="screen-home__hero">
         <div>
           <div class="hero-title">Fk Titan OS</div>
-          <div class="hero-sub">Menu modulaire • base prête pour calcul, graphes, Python, stats et mode examen.</div>
+          <div class="hero-sub">Menu d'applications — Aucune app disponible pour le moment.</div>
         </div>
-        <div class="hero-chip">Apps</div>
+        <div class="hero-chip">Menu</div>
       </div>
 
       <div class="app-grid">

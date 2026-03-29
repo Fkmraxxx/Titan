@@ -14,6 +14,8 @@ export function renderKeypad(container, rows) {
               const classes = ["key"];
               if (key.type === "dark") classes.push("key-dark");
               if (key.type === "accent") classes.push("key-accent");
+              if (key.type === "light") classes.push("key-light");
+              if (key.type === "orange") classes.push("key-orange");
               if (key.size === "small") classes.push("key--small");
               if (key.width === "wide") classes.push("key--wide");
               return `
