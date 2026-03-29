@@ -1,24 +1,24 @@
 export const SOFT_KEYS = ["Y=", "Window", "Zoom", "Trace", "Graph"];
 
 export const APPS = [
-  { id: "calculation", label: "Calculation", icon: "∑", hint: "Bientôt disponible" },
-  { id: "grapher", label: "Grapher", icon: "ƒ", hint: "Bientôt disponible" },
-  { id: "equations", label: "Equations", icon: "=", hint: "Bientôt disponible" },
-  { id: "statistics", label: "Statistics", icon: "▤", hint: "Bientôt disponible" },
-  { id: "regression", label: "Regression", icon: "↗", hint: "Bientôt disponible" },
-  { id: "distributions", label: "Distributions", icon: "π", hint: "Bientôt disponible" },
-  { id: "sequences", label: "Sequences", icon: "n", hint: "Bientôt disponible" },
-  { id: "inference", label: "Inference", icon: "χ", hint: "Bientôt disponible" },
-  { id: "finance", label: "Finance", icon: "¤", hint: "Bientôt disponible" },
-  { id: "python", label: "Python", icon: "Py", hint: "Bientôt disponible" },
-  { id: "matrix", label: "Matrix", icon: "[]", hint: "Bientôt disponible" },
-  { id: "complex", label: "Complex", icon: "i", hint: "Bientôt disponible" },
-  { id: "lists", label: "Lists", icon: "L", hint: "Bientôt disponible" },
-  { id: "programs", label: "Programs", icon: "<>", hint: "Bientôt disponible" },
-  { id: "geometry", label: "Geometry", icon: "△", hint: "Bientôt disponible" },
-  { id: "elements", label: "Elements", icon: "H", hint: "Bientôt disponible" },
-  { id: "settings", label: "Settings", icon: "⚙", hint: "Bientôt disponible" },
-  { id: "exam", label: "Exam", icon: "!", hint: "Bientôt disponible" }
+  { id: "calculation", label: "Calculation", icon: "∑" },
+  { id: "grapher", label: "Grapher", icon: "ƒ" },
+  { id: "equations", label: "Equations", icon: "=" },
+  { id: "statistics", label: "Statistics", icon: "▤" },
+  { id: "regression", label: "Regression", icon: "↗" },
+  { id: "distributions", label: "Distributions", icon: "π" },
+  { id: "sequences", label: "Sequences", icon: "n" },
+  { id: "inference", label: "Inference", icon: "χ" },
+  { id: "finance", label: "Finance", icon: "¤" },
+  { id: "python", label: "Python", icon: "Py" },
+  { id: "matrix", label: "Matrix", icon: "[]" },
+  { id: "complex", label: "Complex", icon: "i" },
+  { id: "lists", label: "Lists", icon: "L" },
+  { id: "programs", label: "Programs", icon: "<>" },
+  { id: "geometry", label: "Geometry", icon: "△" },
+  { id: "elements", label: "Elements", icon: "H" },
+  { id: "settings", label: "Settings", icon: "⚙" },
+  { id: "exam", label: "Exam", icon: "!" }
 ];
 
 export const KEY_ROWS = [
