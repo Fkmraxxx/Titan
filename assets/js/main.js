@@ -5,10 +5,14 @@ import { bindCalculatorControls } from "./core/keyboard.js";
 
 const state = {
   powerOn: true,
-  route: "home",
+  route: "calc",
   selectedApp: 0,
   buffer: "",
-  message: "SYSTEM READY"
+  message: "SYSTEM READY",
+  calcHistory: [],
+  ans: 0,
+  shiftActive: false,
+  alphaActive: false
 };
 
 const refs = {

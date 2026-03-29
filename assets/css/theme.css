@@ -1,57 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
 :root {
-  --bg-1: #190108;
-  --bg-2: #30040f;
-  --body-red-1: #5f071d;
-  --body-red-2: #860d29;
-  --body-red-3: #b31236;
-  --body-red-4: #df3158;
-  --body-red-5: #ff6a8a;
-  --panel-dark: #13080c;
-  --panel-dark-2: #231116;
-  --screen-1: #120207;
-  --screen-2: #280812;
-  --screen-3: #3d1020;
-  --line: rgba(255, 255, 255, 0.11);
-  --line-strong: rgba(255, 255, 255, 0.22);
-  --text: #fff4f6;
-  --text-soft: #f2d3d9;
-  --text-dim: #c98f99;
-  --key-light: #fff4f6;
-  --key-light-2: #ecd8de;
-  --key-dark: #261419;
-  --key-dark-2: #140b0f;
-  --key-accent: #c41139;
-  --key-accent-2: #ea305a;
-  --key-success: #ff7a9a;
-  --shadow-1: 0 28px 60px rgba(0, 0, 0, 0.42);
-  --shadow-2: inset 0 1px 0 rgba(255,255,255,0.15), inset 0 -8px 16px rgba(0,0,0,0.24);
-  --shadow-button: 0 8px 16px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255,255,255,0.72);
-  --radius-xl: 34px;
-  --radius-lg: 26px;
-  --radius-md: 18px;
-  --radius-sm: 14px;
-  --font-main: "Segoe UI", Inter, Arial, sans-serif;
-  --font-mono: "Consolas", "Cascadia Code", monospace;
+  --bg-1: #0a0a0f;
+  --bg-2: #12121a;
+  --bg-3: #1a1a25;
+  --body-1: #1e1e2a;
+  --body-2: #252535;
+  --body-3: #2d2d40;
+  --body-4: #383850;
+  --accent: #6c5ce7;
+  --accent-light: #a29bfe;
+  --accent-dark: #5041c4;
+  --accent-glow: rgba(108, 92, 231, 0.35);
+  --accent-subtle: rgba(108, 92, 231, 0.12);
+  --danger: #ff6b6b;
+  --success: #51cf66;
+  --warning: #ffd43b;
+  --panel-dark: #0d0d14;
+  --panel-dark-2: #141420;
+  --screen-bg: #0e0e16;
+  --screen-border: rgba(108, 92, 231, 0.15);
+  --line: rgba(255, 255, 255, 0.06);
+  --line-strong: rgba(255, 255, 255, 0.12);
+  --text: #f0f0f8;
+  --text-soft: #c8c8d8;
+  --text-dim: #7a7a95;
+  --text-muted: #4a4a60;
+  --key-light: #f5f5fa;
+  --key-light-2: #e0e0ea;
+  --key-dark: #1e1e2c;
+  --key-dark-2: #14141f;
+  --key-accent: var(--accent-dark);
+  --key-accent-2: var(--accent);
+  --key-orange: #e67e22;
+  --key-orange-2: #f39c12;
+  --shadow-deep: 0 30px 80px rgba(0, 0, 0, 0.5), 0 10px 30px rgba(0, 0, 0, 0.3);
+  --shadow-button: 0 4px 12px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255,255,255,0.08);
+  --shadow-button-light: 0 4px 12px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255,255,255,0.6);
+  --shadow-glow: 0 0 20px var(--accent-glow);
+  --radius-xl: 32px;
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --radius-sm: 12px;
+  --radius-xs: 8px;
+  --font-main: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", "Cascadia Code", "Fira Code", monospace;
+  --transition-fast: 0.12s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-* {
+*, *::before, *::after {
   box-sizing: border-box;
-}
-
-html,
-body {
-  min-height: 100%;
-}
-
-body {
   margin: 0;
+  padding: 0;
+}
+
+html, body {
+  min-height: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
   font-family: var(--font-main);
-  background:
-    radial-gradient(circle at top, rgba(255, 106, 138, 0.18), transparent 30%),
-    linear-gradient(180deg, var(--bg-2), var(--bg-1));
+  background: var(--bg-1);
+  background-image:
+    radial-gradient(ellipse at 20% 0%, rgba(108, 92, 231, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 100%, rgba(108, 92, 231, 0.05) 0%, transparent 50%);
   color: var(--text);
+  line-height: 1.4;
 }
 
 button {
   font: inherit;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--body-3);
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--accent);
+  color: white;
 }
