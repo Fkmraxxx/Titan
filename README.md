@@ -1,4 +1,4 @@
-# Fk Titan 🧮
+# Fk Titan :
 
 > **Calculatrice scientifique graphique** style TI/NumWorks — en pur HTML, CSS et JavaScript ES Modules. Aucune dépendance, aucun framework, aucun bundler.
 
